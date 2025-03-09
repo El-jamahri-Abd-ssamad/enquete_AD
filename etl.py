@@ -1,15 +1,15 @@
 import pandas as pd
-import numpy as np 
+#import numpy as np 
 
 
 def nettoyer_csv(df, output_file):
-    #df = pd.read_csv(input_file)
+    
 
     # Supprimer les lignes entièrement vides
-    df.dropna(how='all', inplace=True)
+    #df.dropna(how='all', inplace=True)
 
     # Supprimer les lignes contenant au moins une valeur vide (sauf la dernière colonne)
-    df.dropna(subset=df.columns[:-1], how='any', inplace=True)
+    #df.dropna(subset=df.columns[:-1], how='any', inplace=True)
 
     # Conversion des colonnes spécifiées
     df[df.columns[0]] = df[df.columns[0]].replace({"Homme": 1, "Femme": 0})
@@ -37,12 +37,15 @@ def nettoyer_csv(df, output_file):
 
 if __name__ == '__main__':
     # Load the dataset
-    df = pd.read_csv('C:\\Users\\HP\\OneDrive\\Documents\\ESISA\\3eme_annee\\S6\\Analyse Donnée II\\TP\\enquete\\enquete_AD\\heart.csv')
-    print(df.head())
+    #df = pd.read_csv('data.csv')
+    #print(df.head())
     #Check the data info
-    print(df.info())
+    #df.info()
     #Check the missing values 
-    print(df.isnull().sum())
+    #print(df.isnull().sum())
     #Statistical Analysis
-    print(df.describe())
-    nettoyer_csv(df, "heart_cleaned.csv")
+    #print(df.describe())
+    
+    #Verifier que vous etes dans le bon repertoire /enquete_AD> 
+    df = pd.read_csv('data.csv')
+    nettoyer_csv(df, "data_cleaned.csv")
