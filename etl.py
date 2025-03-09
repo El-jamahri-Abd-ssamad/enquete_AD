@@ -1,6 +1,6 @@
 import pandas as pd
 #import numpy as np 
-
+import sys 
 
 def nettoyer_csv(df, output_file):
     
@@ -40,23 +40,53 @@ def nettoyer_csv(df, output_file):
     df['Influence événements spécifiques sur likes'] = df['Influence événements spécifiques sur likes'].replace('Oui',1)
     df['Influence événements spécifiques sur likes'] = df['Influence événements spécifiques sur likes'].replace('Non',0)
     
+    #Colonne 3:
+    types_contenu = ["Photo/image", "Vidéo", "Citation / Texte", "Infographie"]
+    for contenu in types_contenu:
+        df[contenu] = df[df.columns[2]].apply(lambda x: 1 if contenu in str(x) else 0)
     
+    # Supprimer la colonne originale "Type de contenu"
+    df.drop(columns=[df.columns[2]], inplace=True)
+
+     #Convertion des colonnes oui/non:
+    df["Influence hashtags sur likes"] = df["Influence hashtags sur likes"].replace({"Oui": 1, "Non": 0})
+    
+    
+    #Colonne 13:
+    # Liste des différentes plages horaires
+    plages_horaires = ["6h-9h", "12h-14h", "18h-20h", "Nuit"]
+
+    # Création des colonnes binaires
+    for plage in plages_horaires:
+        df[plage] = df["Heure idéale pour plus de likes"].apply(lambda x: 1 if plage in str(x) else 0)
+
+    # Suppression de la colonne originale
+    df.drop(columns=["Heure idéale pour plus de likes"], inplace=True)
+
     
     # Sauvegarder le fichier nettoyé
     df.to_csv(output_file, index=False)
     print(f"Fichier nettoyé enregistré sous : {output_file}")
 
 if __name__ == '__main__':
-    # Load the dataset
-    #df = pd.read_csv('data.csv')
-    #print(df.head())
-    #Check the data info
-    #df.info()
-    #Check the missing values 
-    #print(df.isnull().sum())
-    #Statistical Analysis
-    #print(df.describe())
+    # Corriger l'encodage de sortie pour la console
+    sys.stdout.reconfigure(encoding='utf-8')
+
+     # Charger le dataset avec encodage UTF-8
+    df = pd.read_csv('D:/AD/enquete_AD/data.csv', encoding="utf-8")
+
+    # Vérifier les premières lignes
+    print(df.head())
     
-    #Verifier que vous etes dans le bon repertoire /enquete_AD> 
-    df = pd.read_csv('data.csv')
-    nettoyer_csv(df, "data_cleaned.csv")
+
+    # Vérifier les informations générales
+    print(df.info())
+
+    # Vérifier les valeurs manquantes
+    print(df.isnull().sum())
+
+    # Analyse statistique
+    print(df.describe())
+
+    # Nettoyer et sauvegarder
+    nettoyer_csv(df, "D:/AD/enquete_AD/data_cleaned.csv")
