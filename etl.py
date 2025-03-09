@@ -31,6 +31,17 @@ def nettoyer_csv(df, output_file):
     }
     df[df.columns[10]] = df[df.columns[10]].replace(effet_mapping)
     
+    #Ayman : "Colonne 5 et colonne 10 : Remplacement des valeurs textuelles par des nombres"
+    # Colonne 5 :
+    df['Influence visages sur likes'] = df['Influence visages sur likes'].replace('Oui',1)
+    df['Influence visages sur likes'] = df['Influence visages sur likes'].replace('Non',0)
+    
+    # Colonne 10 :
+    df['Influence événements spécifiques sur likes'] = df['Influence événements spécifiques sur likes'].replace('Oui',1)
+    df['Influence événements spécifiques sur likes'] = df['Influence événements spécifiques sur likes'].replace('Non',0)
+    
+    
+    
     # Sauvegarder le fichier nettoyé
     df.to_csv(output_file, index=False)
     print(f"Fichier nettoyé enregistré sous : {output_file}")
