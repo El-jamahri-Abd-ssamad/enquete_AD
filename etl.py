@@ -62,8 +62,62 @@ def nettoyer_csv(df, output_file):
 
     # Suppression de la colonne originale
     df.drop(columns=["Heure idéale pour plus de likes"], inplace=True)
-
     
+    
+    # Vérifier que la colonne 4 existe avant modification
+    if df.shape[1] > 3:
+        df[df.columns[3]] = df[df.columns[3]].replace({"Oui": 1, "Non": 0}).infer_objects(copy=False)
+    
+    # Vérifier que la colonne 9 existe avant modification
+    if df.shape[1] > 8:
+        notif_mapping = {
+            "Oui, souvent": 1,
+            "Parfois": 2,
+            "Jamais": 3
+        }
+        df[df.columns[8]] = df[df.columns[8]].replace(notif_mapping).infer_objects(copy=False)
+
+    # --- Traitement de la dernière colonne ---
+    last_col_name = df.columns[-1]  # Nom de la dernière colonne
+
+    # Définition des catégories avec des mots-clés associés
+    categories = {
+        "Qualité du contenu": [
+            "visuels de qualité", "qualité du contenu", "images", "vidéos", "haute qualité",
+            "attire l’attention", "publication bien présentée", "contenu attractif"
+        ],
+        "Fréquence et régularité": [
+            "poster régulièrement", "régularité", "plusieurs publications", "heures actives",
+            "maximiser la visibilité"
+        ],
+        "Interactivité et engagement": [
+            "hashtags pertinents", "interagissez", "audience", "légende engageante",
+            "ajouter des réactions", "#"
+        ],
+        "Type de contenu recommandé": [
+            "contenu attractif", "hashtags pertinents", "interagissez", "heures de forte affluence",
+            "divertissant", "inspirant", "motivante", "impact positif", "post intéressant",
+            "utile", "comique"
+        ],
+        "Public cible et stratégie": [
+            "choisir le public", "public cible", "public intelligent", "like"
+        ],
+        "Suggestions générales": [
+            "nouveauté", "c’est bon", "oui", "non", "rien", "merci", "ok", "flemme"
+        ]
+    }
+
+    # Créer les nouvelles colonnes à partir des catégories
+    new_last_columns = pd.DataFrame(
+        {cat: df[last_col_name].astype(str).str.contains('|'.join(mots), case=False, na=False).astype(int)
+        for cat, mots in categories.items()}
+    )
+
+    # Remplacer la dernière colonne par ces nouvelles colonnes
+    df = pd.concat([df.iloc[:, :-1], new_last_columns], axis=1)
+
+
+
     # Sauvegarder le fichier nettoyé
     df.to_csv(output_file, index=False)
     print(f"Fichier nettoyé enregistré sous : {output_file}")
@@ -73,7 +127,7 @@ if __name__ == '__main__':
     sys.stdout.reconfigure(encoding='utf-8')
 
      # Charger le dataset avec encodage UTF-8
-    df = pd.read_csv('D:/AD/enquete_AD/data.csv', encoding="utf-8")
+    df = pd.read_csv('data.csv', encoding="utf-8")
 
     # Vérifier les premières lignes
     print(df.head())
@@ -89,4 +143,4 @@ if __name__ == '__main__':
     print(df.describe())
 
     # Nettoyer et sauvegarder
-    nettoyer_csv(df, "D:/AD/enquete_AD/data_cleaned.csv")
+    nettoyer_csv(df, "data_cleaned.csv")
