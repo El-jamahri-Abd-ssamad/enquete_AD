@@ -77,7 +77,7 @@ def nettoyer_csv(df, output_file):
         }
         df[df.columns[8]] = df[df.columns[8]].replace(notif_mapping).infer_objects(copy=False)
 
-    # --- Traitement de la dernière colonne ---
+         # --- Traitement de la dernière colonne ---
     last_col_name = df.columns[-1]  # Nom de la dernière colonne
 
     # Définition des catégories avec des mots-clés associés
@@ -107,14 +107,23 @@ def nettoyer_csv(df, output_file):
         ]
     }
 
-    # Créer les nouvelles colonnes à partir des catégories
-    new_last_columns = pd.DataFrame(
-        {cat: df[last_col_name].astype(str).str.contains('|'.join(mots), case=False, na=False).astype(int)
-        for cat, mots in categories.items()}
-    )
+    # Vérifier si la dernière colonne contient bien du texte avant traitement
+    df[last_col_name] = df[last_col_name].astype(str).fillna("")
 
-    # Remplacer la dernière colonne par ces nouvelles colonnes
-    df = pd.concat([df.iloc[:, :-1], new_last_columns], axis=1)
+    # Créer les nouvelles colonnes à partir des catégories
+    new_last_columns = {
+        cat: df[last_col_name].str.contains('|'.join(mots), case=False, na=False).astype(int)
+        for cat, mots in categories.items()
+    }
+
+    # Transformer le dictionnaire en DataFrame
+    new_last_columns_df = pd.DataFrame(new_last_columns)
+
+        # Remplacer la dernière colonne par les nouvelles colonnes
+    df.drop(columns=["Conseils pour augmenter les likes"], inplace=True)
+    df = pd.concat([df, new_last_columns_df], axis=1)  # Ajouter les nouvelles colonnes
+
+
 
 
 
