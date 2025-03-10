@@ -153,3 +153,32 @@ if __name__ == '__main__':
 
     # Nettoyer et sauvegarder
     nettoyer_csv(df, "data_cleaned.csv")
+    
+    
+    # Vérifier les premières lignes du fichier nettoyé
+    
+"""     categories = {
+        "Qualité du contenu": [
+            "visuels de qualité", "qualité du contenu", "images", "vidéos", "haute qualité",
+            "attire l’attention", "publication bien présentée", "contenu attractif"
+        ],
+        "Fréquence et régularité": [
+            "poster régulièrement", "régularité", "plusieurs publications", "heures actives",
+            "maximiser la visibilité"
+        ],
+        "Interactivité et engagement": [
+            "hashtags pertinents", "interagissez", "audience", "légende engageante",
+            "ajouter des réactions", "#"
+        ],
+        "Type de contenu recommandé": [
+            "contenu attractif", "hashtags pertinents", "interagissez", "heures de forte affluence",
+            "divertissant", "inspirant", "motivante", "impact positif", "post intéressant",
+            "utile", "comique"
+        ],
+        "Public cible et stratégie": [
+            "choisir le public", "public cible", "public intelligent", "like"
+        ],
+        "Suggestions générales": [
+            "nouveauté", "c’est bon", "oui", "non", "rien", "merci", "ok", "flemme"
+        ]
+    } """
