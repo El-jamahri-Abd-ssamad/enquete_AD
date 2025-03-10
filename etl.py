@@ -13,6 +13,38 @@ def nettoyer_csv(df, output_file):
 
     # Conversion des colonnes spécifiées
     df[df.columns[0]] = df[df.columns[0]].replace({"Homme": 1, "Femme": 0})
+
+    
+    #Colonne 2: Dictionnaire de mapping pour convertir l'âge
+    age_mapping = {
+        "Moins de 18 ans": 1,
+        "18-24 ans": 2,
+        "25-34 ans": 3,
+        "35-44 ans": 4,
+        "45 ans et plus": 5
+    }
+
+    # Appliquer la conversion
+    df["Âge"] = df["Âge"].map(age_mapping)
+
+    #Colonne 7: # Dictionnaire de mapping pour convertir "Influence réactivité auteur sur likes"
+    reactivity_mapping = {
+        "Oui": 1,
+        "Non": 0
+    }
+
+    df["Influence réactivité auteur sur likes"] = df["Influence réactivité auteur sur likes"].map(reactivity_mapping)
+
+    #Colonne 12: Dictionnaire de mapping pour la colonne "Types contenu plus engageants"
+    engage_content_mapping = {
+        "Contenu suscitant des émotions fortes (joie, surprise, inspiration)": 1,
+        "Contenu humoristique ou divertissant": 2,
+        "Contenu motivant ou inspirant": 3
+    }
+    
+    # Remplacer les valeurs de la colonne 'Types contenu plus engageants' avec les valeurs numériques
+    df["Types contenu plus engageants"] = df["Types contenu plus engageants"].map(engage_content_mapping)
+
     
     # Colonne 6 : Remplacement des valeurs textuelles par des nombres
     impact_mapping = {
@@ -157,28 +189,3 @@ if __name__ == '__main__':
     
     # Vérifier les premières lignes du fichier nettoyé
     
-"""     categories = {
-        "Qualité du contenu": [
-            "visuels de qualité", "qualité du contenu", "images", "vidéos", "haute qualité",
-            "attire l’attention", "publication bien présentée", "contenu attractif"
-        ],
-        "Fréquence et régularité": [
-            "poster régulièrement", "régularité", "plusieurs publications", "heures actives",
-            "maximiser la visibilité"
-        ],
-        "Interactivité et engagement": [
-            "hashtags pertinents", "interagissez", "audience", "légende engageante",
-            "ajouter des réactions", "#"
-        ],
-        "Type de contenu recommandé": [
-            "contenu attractif", "hashtags pertinents", "interagissez", "heures de forte affluence",
-            "divertissant", "inspirant", "motivante", "impact positif", "post intéressant",
-            "utile", "comique"
-        ],
-        "Public cible et stratégie": [
-            "choisir le public", "public cible", "public intelligent", "like"
-        ],
-        "Suggestions générales": [
-            "nouveauté", "c’est bon", "oui", "non", "rien", "merci", "ok", "flemme"
-        ]
-    } """
