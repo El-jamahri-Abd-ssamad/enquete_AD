@@ -73,7 +73,7 @@ if __name__ == '__main__':
     sys.stdout.reconfigure(encoding='utf-8')
 
      # Charger le dataset avec encodage UTF-8
-    df = pd.read_csv('D:/AD/enquete_AD/data.csv', encoding="utf-8")
+    df = pd.read_csv('data.csv', encoding="utf-8")
 
     # Vérifier les premières lignes
     print(df.head())
@@ -89,4 +89,4 @@ if __name__ == '__main__':
     print(df.describe())
 
     # Nettoyer et sauvegarder
-    nettoyer_csv(df, "D:/AD/enquete_AD/data_cleaned.csv")
+    nettoyer_csv(df, "data_cleaned.csv")
