@@ -97,17 +97,13 @@ def nettoyer_csv(df, output_file):
     
     
     # Vérifier que la colonne 4 existe avant modification
-    if df.shape[1] > 3:
-        df[df.columns[3]] = df[df.columns[3]].replace({"Oui": 1, "Non": 0}).infer_objects(copy=False)
-    
+    df["Influence qualité visuelle sur likes"] = df["Influence qualité visuelle sur likes"].replace('Oui',1)
+    df["Influence qualité visuelle sur likes"] = df["Influence qualité visuelle sur likes"].replace('Non',0)
+        
     # Vérifier que la colonne 9 existe avant modification
-    if df.shape[1] > 8:
-        notif_mapping = {
-            "Oui, souvent": 1,
-            "Parfois": 2,
-            "Jamais": 3
-        }
-        df[df.columns[8]] = df[df.columns[8]].replace(notif_mapping).infer_objects(copy=False)
+    df['Influence notifications sur likes'] = df['Influence notifications sur likes'].replace('Oui, souvent',1)
+    df['Influence notifications sur likes'] = df['Influence notifications sur likes'].replace('Parfois',2)
+    df['Influence notifications sur likes'] = df['Influence notifications sur likes'].replace('Jamais',3)
 
          # --- Traitement de la dernière colonne ---
     last_col_name = df.columns[-1]  # Nom de la dernière colonne
