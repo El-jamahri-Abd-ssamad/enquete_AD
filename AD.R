@@ -6,7 +6,7 @@ library(factoextra)
 library(ggplot2)
 
 # 1. Chargement des données
-df <- read.csv("F:/AD/enquete_AD/data_cleaned.csv", sep = ",", na.strings = "")
+df <- read.csv("C:/Users/HP/OneDrive/Documents/ESISA/3eme_annee/S6/Analyse Donnée II/TP/enquete/enquete_AD/data_cleaned.csv", sep = ",", na.strings = "")
 df[] <- lapply(df, as.factor)
 
 # 2. Calcul de l’ACM (avec variables supplémentaires si besoin)
@@ -78,3 +78,4 @@ fviz_contrib(res.mca, choice = "var", axes = 2, top = 10) +
 fviz_contrib(res.mca, choice = "var", axes = 1, top = 15, 
              element = "bar", 
              title = "Top 15 modalités contributives à l’axe 1")
+
