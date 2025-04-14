@@ -13,7 +13,6 @@ def main():
     # Chargement du modèle enregistré
     model = joblib.load('like_model.pkl')
     
-    # Chargement des nouvelles données à prédire (ex. 'new_data.csv')
     new_file_path = 'new_data.csv'
     new_data = load_new_data(new_file_path)
     
@@ -23,10 +22,6 @@ def main():
     print("Prédictions pour les nouvelles données:")
     print(predictions)
     
-    # Optionnel : Afficher les probabilités de prédiction
-    # probabilities = model.predict_proba(new_data)
-    # print("Probabilités de prédiction:")
-    # print(probabilities)
 
 if __name__ == '__main__':
     main()
