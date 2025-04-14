@@ -93,7 +93,7 @@ def evaluate_model(model, X_test, y_test):
 
 
 def main():
-    # Chemin vers votre fichier CSV (modifiez-le en fonction de l'emplacement réel)
+
     file_path = 'data_cleaned.csv'
     
     # 1. Chargement et prétraitement des données
